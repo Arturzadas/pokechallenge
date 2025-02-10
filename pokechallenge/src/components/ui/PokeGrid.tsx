@@ -1,17 +1,37 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import { gridStyles } from "../Styles";
+import { PokeContext } from "../../helpers/context";
+import { useContext } from "react";
 
 export const PokeGrid = () => {
-  const pokemon = [0, 1, 2, 3];
+  const context = useContext(PokeContext);
 
-  const { container } = gridStyles;
+  const { poke } = context;
+
+  const { container, card, image, outContainer } = gridStyles;
 
   return (
-    <Flex {...container}>
-      {pokemon?.length > 0 &&
-        pokemon.map((poke, index) => {
-          return <Flex key={index}>Pokemon {index}</Flex>;
-        })}
+    <Flex
+      justifyContent={"center"}
+      {...outContainer}
+    >
+      <Flex {...container}>
+        {poke?.length > 0 &&
+          poke.map((poke, index) => {
+            return (
+              <Flex
+                {...card}
+                key={index}
+              >
+                <Image
+                  {...image}
+                  src={poke?.sprites?.front_default}
+                />
+                <Text>{poke?.name}</Text>
+              </Flex>
+            );
+          })}
+      </Flex>
     </Flex>
   );
 };

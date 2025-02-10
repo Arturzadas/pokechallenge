@@ -9,21 +9,56 @@ import { pokeAPI } from "../helpers/axios";
 export const Dash = () => {
   const { container } = dashStyles;
   const context = useContext(PokeContext);
-  const { setPokeTypes, pokeTypes } = context;
+  const { setPokeTypes, currType, currPage, setPoke } = context;
 
-  const getPokeInit = async () => {
+  const getPokeTypes = async () => {
     const pokeTypes = await pokeAPI.get("/type");
     setPokeTypes(pokeTypes?.data?.results);
   };
+  const getPokeListByType = async () => {
+    const itemsPerPage = 25;
 
+    try {
+      const pokes = await pokeAPI.get(`/type/${currType}/?limit=25&offset=0`);
+
+      const startIndex = (currPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+
+      const pokeList = pokes?.data?.pokemon?.slice(startIndex, endIndex);
+
+      const pokeDetails = await Promise.all(
+        pokeList.map(async pokemon => {
+          const details = await pokeAPI.get(pokemon.pokemon.url);
+          return details?.data;
+        })
+      );
+
+      console.log(pokeDetails);
+      setPoke(pokeDetails);
+    } catch (error) {
+      console.error("Error fetching Pokémon:", error);
+    }
+  };
+
+  // init poke type list from api
   useEffect(() => {
-    getPokeInit();
-  }, [pokeTypes]);
+    getPokeTypes();
+  }, []);
+
+  // fetch pokes when poketype is changed
+  useEffect(() => {
+    getPokeListByType();
+  }, [currType, currPage]);
 
   return (
-    <Flex {...container}>
-      <NavDrawer />
-      <PokeGrid />
+    <Flex
+      w={"full"}
+      justifyContent={"center"}
+    >
+      <Flex {...container}>
+        <NavDrawer />
+        <PokeGrid />
+      </Flex>
     </Flex>
   );
 };

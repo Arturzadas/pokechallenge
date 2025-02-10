@@ -21,11 +21,13 @@ export const NavDrawer = () => {
     pokeTypes,
     currType,
     setCurrType,
+    setCurrPage,
   } = context;
 
   const { container } = navStyles;
 
   const handleTypeClick = type => {
+    setCurrPage(1);
     setCurrType(type);
   };
 
