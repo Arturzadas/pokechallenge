@@ -1,5 +1,5 @@
 const mainColor = "blackAlpha.800";
-// const secColor = "blakcAlpha.400";
+const secColor = "blakcAlpha.400";
 const thirColor = "blackAlpha.100";
 
 const commonStyle = {
@@ -42,18 +42,21 @@ export const gridStyles = {
     px: "5%",
   },
   container: {
-    w: "calc(100vw - 75px)",
+    w: "100%",
     flexWrap: "wrap" as const,
     alignItems: "center",
-    justifyContent: "flex-start" as const,
+    justifyContent: "space-between" as const,
     h: "100vh",
     overflowY: "scroll" as const,
+    sx: {
+      "&::-webkit-scrollbar": {
+        display: "none",
+      },
+    },
   },
   card: {
     ...commonStyle,
     h: "200px",
-    maxW: "20%",
-    w: "full",
     minW: "200px",
     flexDir: "column" as const,
     alignItems: "center" as const,
@@ -71,5 +74,6 @@ export const gridStyles = {
   image: {
     h: "70px",
     w: "70px",
+    bgColor: secColor,
   },
 };

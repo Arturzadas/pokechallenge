@@ -6,9 +6,14 @@ import { useContext } from "react";
 export const PokeGrid = () => {
   const context = useContext(PokeContext);
 
-  const { poke } = context;
+  const { poke, onModalOpen, setCurrPoke } = context;
 
   const { container, card, image, outContainer } = gridStyles;
+
+  const handlePokeClick = item => {
+    setCurrPoke(item);
+    onModalOpen();
+  };
 
   return (
     <Flex
@@ -17,17 +22,18 @@ export const PokeGrid = () => {
     >
       <Flex {...container}>
         {poke?.length > 0 &&
-          poke.map((poke, index) => {
+          poke.map((item, index) => {
             return (
               <Flex
                 {...card}
                 key={index}
+                onClick={() => handlePokeClick(item)}
               >
                 <Image
                   {...image}
-                  src={poke?.sprites?.front_default}
+                  src={item?.sprites?.front_default}
                 />
-                <Text>{poke?.name}</Text>
+                <Text>{item?.name}</Text>
               </Flex>
             );
           })}

@@ -9,10 +9,16 @@ export const PokeProvider = ({ children }) => {
     onOpen: onDrawerOpen,
     onClose: onDrawerClose,
   } = useDisclosure();
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
   const [poke, setPoke] = useState([]);
   const [pokeTypes, setPokeTypes] = useState([]);
   const [currType, setCurrType] = useState("normal");
   const [currPage, setCurrPage] = useState(1);
+  const [currPoke, setCurrPoke] = useState({});
 
   return (
     <PokeContext.Provider
@@ -30,6 +36,11 @@ export const PokeProvider = ({ children }) => {
         setCurrType,
         currPage,
         setCurrPage,
+        isModalOpen,
+        onModalOpen,
+        onModalClose,
+        currPoke,
+        setCurrPoke,
       }}
     >
       {children}

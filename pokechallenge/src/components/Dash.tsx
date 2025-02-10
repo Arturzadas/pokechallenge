@@ -5,6 +5,7 @@ import { PokeGrid } from "./ui/PokeGrid";
 import { useContext, useEffect } from "react";
 import { PokeContext } from "../helpers/context";
 import { pokeAPI } from "../helpers/axios";
+import { PokeCard } from "./ui/PokeCard";
 
 export const Dash = () => {
   const { container } = dashStyles;
@@ -55,6 +56,7 @@ export const Dash = () => {
       w={"full"}
       justifyContent={"center"}
     >
+      <PokeCard />
       <Flex {...container}>
         <NavDrawer />
         <PokeGrid />
