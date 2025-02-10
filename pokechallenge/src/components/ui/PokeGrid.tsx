@@ -8,9 +8,10 @@ export const PokeGrid = () => {
 
   return (
     <Flex {...container}>
-      {pokemon.map((poke, index) => {
-        return <Flex>Pokemon {index}</Flex>;
-      })}
+      {pokemon?.length > 0 &&
+        pokemon.map((poke, index) => {
+          return <Flex key={index}>Pokemon {index}</Flex>;
+        })}
     </Flex>
   );
 };

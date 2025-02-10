@@ -14,9 +14,20 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 export const NavDrawer = () => {
   const context = useContext(PokeContext);
 
-  const { isDrawerOpen, onDrawerClose, onDrawerOpen } = context;
+  const {
+    isDrawerOpen,
+    onDrawerClose,
+    onDrawerOpen,
+    pokeTypes,
+    currType,
+    setCurrType,
+  } = context;
 
   const { container } = navStyles;
+
+  const handleTypeClick = type => {
+    setCurrType(type);
+  };
 
   return (
     <>
@@ -38,9 +49,18 @@ export const NavDrawer = () => {
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
           <DrawerBody>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+            {pokeTypes?.length > 0 &&
+              pokeTypes.map((poke, index) => {
+                return (
+                  <Flex
+                    onClick={() => handleTypeClick(poke?.name)}
+                    key={index}
+                    bgColor={currType === poke?.name ? "blue" : "white"}
+                  >
+                    {poke?.name}
+                  </Flex>
+                );
+              })}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

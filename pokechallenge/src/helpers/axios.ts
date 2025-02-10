@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const pokeAPI = axios.create({
-  baseURL: "https://some-domain.com/api/",
-  timeout: 1000,
-  headers: { "X-Custom-Header": "foobar" },
+  baseURL: "https://pokeapi.co/api/v2",
+  timeout: 10000,
+  method: "GET",
 });

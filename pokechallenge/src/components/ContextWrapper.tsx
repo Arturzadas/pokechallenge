@@ -9,10 +9,25 @@ export const PokeProvider = ({ children }) => {
     onOpen: onDrawerOpen,
     onClose: onDrawerClose,
   } = useDisclosure();
+  const [poke, setPoke] = useState([]);
+  const [pokeTypes, setPokeTypes] = useState([]);
+  const [currType, setCurrType] = useState("normal");
 
   return (
     <PokeContext.Provider
-      value={{ user, setUser, isDrawerOpen, onDrawerOpen, onDrawerClose }}
+      value={{
+        user,
+        setUser,
+        isDrawerOpen,
+        onDrawerOpen,
+        onDrawerClose,
+        poke,
+        setPoke,
+        pokeTypes,
+        setPokeTypes,
+        currType,
+        setCurrType,
+      }}
     >
       {children}
     </PokeContext.Provider>

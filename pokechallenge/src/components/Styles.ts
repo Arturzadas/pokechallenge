@@ -9,6 +9,7 @@ export const dashStyles = {
     backgroundColor: mainColor,
     color: "white",
     alignItems: "flex-end",
+    flexDir: "column" as const,
   },
 };
 
