@@ -21,7 +21,7 @@ export const PokeCard = () => {
     currPoke,
   } = context;
 
-  // console.log(currPoke);
+  console.log(currPoke);
 
   return (
     <>
