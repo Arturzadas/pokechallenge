@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { navStyles } from "../Styles";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { getIcon } from "../../helpers/iconize";
 
 export const NavDrawer = () => {
   const context = useContext(PokeContext);
@@ -24,9 +25,10 @@ export const NavDrawer = () => {
     setCurrPage,
   } = context;
 
-  const { container } = navStyles;
+  const { container, drawerCont, drawerBody, single } = navStyles;
 
   const handleTypeClick = type => {
+    onDrawerClose();
     setCurrPage(1);
     setCurrType(type);
   };
@@ -39,7 +41,6 @@ export const NavDrawer = () => {
           h={"50px"}
           onClick={onDrawerOpen}
           color={"white"}
-          backgroundColor={"blue"}
         />
       </Flex>
       <Drawer
@@ -48,18 +49,20 @@ export const NavDrawer = () => {
         onClose={onDrawerClose}
       >
         <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
-          <DrawerBody>
+        <DrawerContent {...drawerCont}>
+          <DrawerHeader borderBottomWidth="1px">Types</DrawerHeader>
+          <DrawerBody {...drawerBody}>
             {pokeTypes?.length > 0 &&
               pokeTypes.map((poke, index) => {
                 return (
                   <Flex
                     onClick={() => handleTypeClick(poke?.name)}
                     key={index}
-                    bgColor={currType === poke?.name ? "blue" : "white"}
+                    {...single}
+                    bgColor={currType === poke?.name ? "white" : "none"}
+                    color={currType === poke?.name ? "black" : "white"}
                   >
-                    {poke?.name}
+                    {getIcon(poke?.name)} {poke?.name}
                   </Flex>
                 );
               })}

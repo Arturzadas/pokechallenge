@@ -6,26 +6,34 @@ import { useContext, useEffect } from "react";
 import { PokeContext } from "../helpers/context";
 import { pokeAPI } from "../helpers/axios";
 import { PokeCard } from "./ui/PokeCard";
+import { Pagination } from "./ui/Pagination";
 
 export const Dash = () => {
   const { container } = dashStyles;
   const context = useContext(PokeContext);
-  const { setPokeTypes, currType, currPage, setPoke } = context;
+  const { setPokeTypes, currType, currPage, setPoke, setTotalPages } = context;
 
   const getPokeTypes = async () => {
     const pokeTypes = await pokeAPI.get("/type");
     setPokeTypes(pokeTypes?.data?.results);
   };
   const getPokeListByType = async () => {
+    setPoke([]);
+
     const itemsPerPage = 25;
 
     try {
-      const pokes = await pokeAPI.get(`/type/${currType}/?limit=25&offset=0`);
+      const pokes = await pokeAPI.get(`/type/${currType}`);
+
+      const allPokes = pokes?.data?.pokemon;
+
+      const totalPokemons = allPokes.length;
+      const totalPages = Math.ceil(totalPokemons / itemsPerPage);
 
       const startIndex = (currPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
 
-      const pokeList = pokes?.data?.pokemon?.slice(startIndex, endIndex);
+      const pokeList = allPokes.slice(startIndex, endIndex);
 
       const pokeDetails = await Promise.all(
         pokeList.map(async pokemon => {
@@ -34,8 +42,8 @@ export const Dash = () => {
         })
       );
 
-      console.log(pokeDetails);
       setPoke(pokeDetails);
+      setTotalPages(totalPages);
     } catch (error) {
       console.error("Error fetching Pokémon:", error);
     }
@@ -60,6 +68,7 @@ export const Dash = () => {
       <Flex {...container}>
         <NavDrawer />
         <PokeGrid />
+        <Pagination />
       </Flex>
     </Flex>
   );

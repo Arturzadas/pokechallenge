@@ -1,4 +1,4 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
+import { Flex, Image, Spinner, Text } from "@chakra-ui/react";
 import { gridStyles } from "../Styles";
 import { PokeContext } from "../../helpers/context";
 import { useContext } from "react";
@@ -37,6 +37,15 @@ export const PokeGrid = () => {
               </Flex>
             );
           })}
+        {poke?.length === 0 && (
+          <Spinner
+            position={"fixed"}
+            h={"200px"}
+            w={"200px"}
+            top={"calc(50vh - 100px)"}
+            left={"calc(50vw - 100px)"}
+          />
+        )}
       </Flex>
     </Flex>
   );

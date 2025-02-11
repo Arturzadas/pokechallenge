@@ -19,6 +19,8 @@ export const PokeProvider = ({ children }) => {
   const [currType, setCurrType] = useState("normal");
   const [currPage, setCurrPage] = useState(1);
   const [currPoke, setCurrPoke] = useState({});
+  const [displayPoke, setDisplayPoke] = useState({});
+  const [totalPages, setTotalPages] = useState(1);
 
   return (
     <PokeContext.Provider
@@ -41,6 +43,10 @@ export const PokeProvider = ({ children }) => {
         onModalClose,
         currPoke,
         setCurrPoke,
+        displayPoke,
+        setDisplayPoke,
+        totalPages,
+        setTotalPages,
       }}
     >
       {children}
